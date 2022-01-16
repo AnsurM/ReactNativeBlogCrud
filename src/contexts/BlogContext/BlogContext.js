@@ -6,8 +6,7 @@ export const BlogContext = createContext();
 export const BlogContextProvider = ({ children }) => {
   const [blogPosts, setBlogPosts] = useState([]);
 
-  const getPostIndex = (post) =>
-    currentPosts.findIndex((pt) => pt.id === post.id);
+  const getPostIndex = (post) => blogPosts.findIndex((pt) => pt.id === post.id);
 
   const addBlogPost = (post) => {
     const postToAdd = {

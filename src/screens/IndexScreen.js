@@ -1,22 +1,31 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, Button, FlatList } from "react-native";
+import BlogListItem from "../components/BlogListItem";
 import { useBlogContext } from "../contexts/BlogContext";
 
-export default function IndexScreen() {
-  const { blogPosts, addBlogPost } = useBlogContext();
+export default function IndexScreen({ navigation }) {
+  const { blogPosts, addBlogPost, editBlogPost, deleteBlogPost } =
+    useBlogContext();
+
+  const onEditItem = (post) => {
+    navigation.navigate("EditItem", {
+      post,
+      onEdit: editBlogPost,
+    });
+  };
 
   return (
     <View>
-      <Text>Index Screen</Text>
       <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         keyExtractor={(post) => post.id}
         data={blogPosts}
         renderItem={({ item: post }) => (
-          <>
-            <Text>{post.title}</Text>
-          </>
+          <BlogListItem
+            item={post}
+            onEdit={onEditItem}
+            onDelete={deleteBlogPost}
+          />
         )}
       />
     </View>
