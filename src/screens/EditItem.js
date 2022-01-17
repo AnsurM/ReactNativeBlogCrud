@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { editBlogPost } from "../api/blogposts";
 
 export default function EditItem({ navigation }) {
   const originalPost = navigation.getParam("post");
@@ -19,9 +20,13 @@ export default function EditItem({ navigation }) {
     setPost(tempPost);
   };
 
+  const editPost = async (post) => {
+    const response = await editBlogPost(post);
+    if (response.data) navigation.navigate("Index");
+  };
+
   const onSubmit = () => {
-    onEdit(post);
-    navigation.navigate("Index");
+    editPost(post);
   };
 
   return (
